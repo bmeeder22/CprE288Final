@@ -1,0 +1,81 @@
+################################################################################
+# Automatically-generated file. Do not edit!
+################################################################################
+
+# Add inputs and outputs from these tool invocations to the build variables 
+CMD_SRCS += \
+../tm4c123gh6pm.cmd 
+
+C_SRCS += \
+../Timer.c \
+../WiFi.c \
+../cliffSensor.c \
+../lcd.c \
+../main.c \
+../movement.c \
+../servo.c \
+../sonar.c \
+../tm4c123gh6pm_startup_ccs.c \
+../uart.c 
+
+OBJS += \
+./Timer.obj \
+./WiFi.obj \
+./cliffSensor.obj \
+./lcd.obj \
+./main.obj \
+./movement.obj \
+./servo.obj \
+./sonar.obj \
+./tm4c123gh6pm_startup_ccs.obj \
+./uart.obj 
+
+C_DEPS += \
+./Timer.d \
+./WiFi.d \
+./cliffSensor.d \
+./lcd.d \
+./main.d \
+./movement.d \
+./servo.d \
+./sonar.d \
+./tm4c123gh6pm_startup_ccs.d \
+./uart.d 
+
+C_DEPS__QUOTED += \
+"Timer.d" \
+"WiFi.d" \
+"cliffSensor.d" \
+"lcd.d" \
+"main.d" \
+"movement.d" \
+"servo.d" \
+"sonar.d" \
+"tm4c123gh6pm_startup_ccs.d" \
+"uart.d" 
+
+OBJS__QUOTED += \
+"Timer.obj" \
+"WiFi.obj" \
+"cliffSensor.obj" \
+"lcd.obj" \
+"main.obj" \
+"movement.obj" \
+"servo.obj" \
+"sonar.obj" \
+"tm4c123gh6pm_startup_ccs.obj" \
+"uart.obj" 
+
+C_SRCS__QUOTED += \
+"../Timer.c" \
+"../WiFi.c" \
+"../cliffSensor.c" \
+"../lcd.c" \
+"../main.c" \
+"../movement.c" \
+"../servo.c" \
+"../sonar.c" \
+"../tm4c123gh6pm_startup_ccs.c" \
+"../uart.c" 
+
+
