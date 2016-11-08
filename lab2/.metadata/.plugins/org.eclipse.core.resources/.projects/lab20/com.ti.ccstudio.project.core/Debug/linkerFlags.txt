@@ -1,0 +1,1 @@
+-mv4 --code_state=32 -g --diag_warning=225 --diag_wrap=off --display_error_number -z -m"lab20.map" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_15.12.1.LTS/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_15.12.1.LTS/include" --reread_libs --warn_sections --diag_wrap=off --display_error_number --xml_link_info="lab20_linkInfo.xml" --rom_model -o "U:/cpre 288/lab2/lab20/Debug/lab20.out"

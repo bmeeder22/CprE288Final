@@ -1,0 +1,47 @@
+#include "open_interface.h"
+
+
+void move_forward(oi_t *self, int centimeters)
+{
+	int distance_mm = 50*10;
+	oi_setWheels(180,180); // set the speed of both wheels
+	int sum = 0;
+
+	while (sum < distance_mm) {
+		oi_update(self);
+		sum += self->distance;
+		// optional check for bump sensors
+	}
+
+	oi_setWheels(0,0); // stop the robot
+	return sum;
+}
+
+void turn_clockwise(oi_t *sensor, int degrees) {
+	degrees = degrees * -1;
+	oi_setWheels(-182,182); // set the speed of both wheels
+	int sum = 0;
+
+	while (sum > degrees) {
+		oi_update(sensor);
+		sum += sensor->angle;
+		// optional check for bump sensors
+	}
+
+	oi_setWheels(0,0); // stop the robot
+	return;
+}
+
+void turn_counterclock(oi_t *sensor, int degrees) {
+	oi_setWheels(182,-182); // set the speed of both wheels
+	int sum = 0;
+
+	while (sum < degrees) {
+		oi_update(sensor);
+		sum += sensor->angle;
+		// optional check for bump sensors
+	}
+
+	oi_setWheels(0,0); // stop the robot
+	return;
+}

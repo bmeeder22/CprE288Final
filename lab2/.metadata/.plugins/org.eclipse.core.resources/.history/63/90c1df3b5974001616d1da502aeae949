@@ -1,0 +1,13 @@
+#include "lcd.h"
+#include "open_interface.h"
+#include "timer.h"
+#include "movement.h"
+
+int move_forward(oi_t *self, unsigned int distance_mm);
+
+int main (void) {
+	oi_t *sensor_data = oi_alloc();
+	oi_init(sensor_data);
+
+	turn_clockwise(sensor_data, 90)
+}

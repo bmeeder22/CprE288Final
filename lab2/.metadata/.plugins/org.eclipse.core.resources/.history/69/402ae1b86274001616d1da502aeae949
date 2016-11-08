@@ -1,0 +1,29 @@
+#include "lcd.h"
+#include "open_interface.h"
+#include "timer.h"
+#include "movement.h"
+
+int main (void) {
+	oi_t *sensor_data = oi_alloc();
+	oi_init(sensor_data);
+
+	int distance_mm = 2000;
+	oi_setWheels(180,180); // set the speed of both wheels
+	int sum = 0;
+
+	while (sum < distance_mm) {
+		oi_update(sensor_data);
+		sum += sensor_data->distance;
+		// optional check for bump sensors
+
+		if(sensor_data->bumpLeft) {
+
+		}
+		else if(sensor_data->bumpRight) {
+
+		}
+	}
+
+	oi_setWheels(0,0); // stop the robot
+	return;
+}

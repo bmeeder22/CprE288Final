@@ -1,0 +1,1 @@
+"./helloworld.obj" "./lcd.obj" "./main.obj" "./timer.obj" -llibc.a 
