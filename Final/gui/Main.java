@@ -118,6 +118,8 @@ public class Main {
                 case "Right":
                     handleRight();
                     break;
+                default:
+                    statusLabel.setText("Button");
             }
         }
 
