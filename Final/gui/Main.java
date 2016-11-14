@@ -4,9 +4,9 @@ import javax.swing.*;
 
 public class Main {
     private JFrame mainFrame;
-    private JLabel headerLabel;
     private JLabel statusLabel;
-    private JPanel controlPanel;
+    private JPanel arrowpad;
+    private JPanel optionPanel;
 
     public Main(){
         prepareGUI();
@@ -14,50 +14,89 @@ public class Main {
 
     public static void main(String[] args){
         Main swingControlDemo = new Main();
-        swingControlDemo.showEventDemo();
+        swingControlDemo.renderOptionPanel();
+        swingControlDemo.renderArrowpad();
+
+        System.out.println("done!");
     }
 
     private void prepareGUI(){
         mainFrame = new JFrame("Java SWING Examples");
-        mainFrame.setSize(400,400);
+        mainFrame.setSize(500,500);
         mainFrame.setLayout(new GridLayout(3, 1));
 
-        headerLabel = new JLabel("",JLabel.CENTER );
         statusLabel = new JLabel("",JLabel.CENTER);
 
-        statusLabel.setSize(350,100);
+        statusLabel.setSize(500,500);
         mainFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent windowEvent){
                 System.exit(0);
             }
         });
-        controlPanel = new JPanel();
-        controlPanel.setLayout(new FlowLayout());
+        arrowpad = new JPanel();
+        optionPanel = new JPanel();
+        arrowpad.setLayout(new GridLayout(3,3,1,1));
+        optionPanel.setLayout(new GridLayout(3,3,1,1));
 
-        mainFrame.add(headerLabel);
-        mainFrame.add(controlPanel);
+
+        mainFrame.add(arrowpad);
+        mainFrame.add(optionPanel);
         mainFrame.add(statusLabel);
         mainFrame.setVisible(true);
     }
 
-    private void showEventDemo(){
-        headerLabel.setText("Control in action: Button");
+    private void renderOptionPanel() {
+        JButton button1 = new JButton("1");
+        JButton button2 = new JButton("2");
+        JButton button3 = new JButton("3");
+        JButton button4 = new JButton("4");
 
-        JButton okButton = new JButton("OK");
-        JButton submitButton = new JButton("Submit");
-        JButton cancelButton = new JButton("Cancel");
+        button1.setActionCommand("1");
+        button2.setActionCommand("2");
+        button3.setActionCommand("3");
+        button4.setActionCommand("4");
 
-        okButton.setActionCommand("OK");
-        submitButton.setActionCommand("Submit");
-        cancelButton.setActionCommand("Cancel");
+        button1.addActionListener(new ButtonClickListener());
+        button2.addActionListener(new ButtonClickListener());
+        button3.addActionListener(new ButtonClickListener());
+        button4.addActionListener(new ButtonClickListener());
 
-        okButton.addActionListener(new ButtonClickListener());
-        submitButton.addActionListener(new ButtonClickListener());
-        cancelButton.addActionListener(new ButtonClickListener());
+        optionPanel.add(button1);
+        optionPanel.add(button2);
+        optionPanel.add(button3);
+        optionPanel.add(button4);
+    }
 
-        controlPanel.add(okButton);
-        controlPanel.add(submitButton);
-        controlPanel.add(cancelButton);
+    private void renderArrowpad(){
+        JButton forwardButton = new JButton("Forward");
+        JButton backButton = new JButton("Backwards");
+        JButton leftButton = new JButton("Left");
+        JButton rightButton = new JButton("Right");
+
+        forwardButton.setActionCommand("Forward");
+        backButton.setActionCommand("Backwards");
+        leftButton.setActionCommand("Left");
+        rightButton.setActionCommand("Right");
+
+        forwardButton.addActionListener(new ButtonClickListener());
+        backButton.addActionListener(new ButtonClickListener());
+        leftButton.addActionListener(new ButtonClickListener());
+        rightButton.addActionListener(new ButtonClickListener());
+
+//        Row1
+        arrowpad.add(new JLabel());
+        arrowpad.add(forwardButton);
+        arrowpad.add(new JLabel());
+
+//        Row2
+        arrowpad.add(leftButton);
+        arrowpad.add(new JLabel());
+        arrowpad.add(rightButton);
+
+//        Row3
+        arrowpad.add(new JLabel());
+        arrowpad.add(backButton);
+        arrowpad.add(new JLabel());
 
         mainFrame.setVisible(true);
     }
@@ -65,15 +104,37 @@ public class Main {
     private class ButtonClickListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
-            if( command.equals( "OK" ))  {
-                statusLabel.setText("Ok Button clicked.");
+
+            switch(command) {
+                case "Forward":
+                    handleForward();
+                    break;
+                case "Backwards":
+                    handleBack();
+                    break;
+                case "Left":
+                    handleLeft();
+                    break;
+                case "Right":
+                    handleRight();
+                    break;
             }
-            else if( command.equals( "Submit" ) )  {
-                statusLabel.setText("Submit Button clicked.");
-            }
-            else  {
-                statusLabel.setText("Cancel Button clicked.");
-            }
+        }
+
+        private void handleRight() {
+            statusLabel.setText("Right");
+        }
+
+        private  void handleLeft() {
+            statusLabel.setText("Left");
+        }
+
+        private void handleForward() {
+            statusLabel.setText("Forward");
+        }
+
+        private void handleBack() {
+            statusLabel.setText("Backwards");
         }
     }
 }
