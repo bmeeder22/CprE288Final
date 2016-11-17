@@ -1,6 +1,5 @@
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 public class ListClient {
@@ -8,20 +7,18 @@ public class ListClient {
     Socket serverSocket;
     String serverHostName = "192.168.1.1";
     int serverPortNumber = 42880;
-    ServerListener sl;
-    public ArrayList<FoundObject> objects = new ArrayList<>();
+    ServerListener serverListener;
+    private ArrayList<FoundObject> objects = new ArrayList<>();
 
     ListClient() {
         try {
             serverSocket = new Socket(serverHostName, serverPortNumber);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        sl = new ServerListener(this, serverSocket);
-        new Thread(sl).start();
+        serverListener = new ServerListener(this, serverSocket);
+        new Thread(serverListener).start();
     }
 
     public int sendMessage(String s) {
@@ -51,6 +48,10 @@ public class ListClient {
         int location = Integer.parseInt(object[1].split(":")[1]);
         int distance = Integer.parseInt(object[2].split(":")[1]);
         objects.add(new FoundObject(width,location,distance));
+    }
+
+    public ArrayList<FoundObject> getObjects() {
+        return objects;
     }
 }
 

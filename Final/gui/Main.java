@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
     private JFrame mainFrame;
@@ -8,6 +10,7 @@ public class Main {
     private JPanel arrowpad;
     private JPanel optionPanel;
     private ListClient client;
+    RobotViewPanel robotViewPanel;
 
     public Main(){
         prepareGUI();
@@ -22,9 +25,9 @@ public class Main {
     }
 
     private void prepareGUI(){
-        client = new ListClient();
+//        client = new ListClient();
         mainFrame = new JFrame("Java SWING Examples");
-        mainFrame.setSize(500,500);
+        mainFrame.setSize(500,600);
         mainFrame.setLayout(new GridLayout(3, 1));
 
         statusLabel = new JLabel("",JLabel.CENTER);
@@ -39,12 +42,23 @@ public class Main {
         optionPanel = new JPanel();
         arrowpad.setLayout(new GridLayout(3,3,1,1));
         optionPanel.setLayout(new GridLayout(3,3,1,1));
+        robotViewPanel = new RobotViewPanel(new ArrayList<FoundObject>());
 
 
         mainFrame.add(arrowpad);
         mainFrame.add(optionPanel);
-        mainFrame.add(statusLabel);
+        mainFrame.add(robotViewPanel);
         mainFrame.setVisible(true);
+    }
+
+    private ArrayList<FoundObject> getRandomObject() {
+        ArrayList<FoundObject> testArray = new ArrayList<FoundObject>();
+        int randomWidth = ThreadLocalRandom.current().nextInt(0, 20 + 1);
+        int randomDistance = ThreadLocalRandom.current().nextInt(25, 70 + 1);
+        int randomLocation = ThreadLocalRandom.current().nextInt(0, 180 + 1);
+
+        testArray.add(new FoundObject(randomWidth,randomLocation,randomDistance));
+        return testArray;
     }
 
     private void renderOptionPanel() {
@@ -103,6 +117,16 @@ public class Main {
         mainFrame.setVisible(true);
     }
 
+    private ArrayList<FoundObject> getSweepData() {
+        ArrayList<FoundObject> start = client.getObjects();
+        ArrayList<FoundObject> end = client.getObjects();
+        while(start == end) {
+            end = client.getObjects();
+        }
+
+        return end;
+    }
+
     private class ButtonClickListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
@@ -148,8 +172,8 @@ public class Main {
         }
 
         private void handleSweep() {
-            statusLabel.setText("Sweep");
-            client.sendMessage("s");
+            robotViewPanel.repaint(getSweepData());
+            robotViewPanel.revalidate();
         }
     }
 }
