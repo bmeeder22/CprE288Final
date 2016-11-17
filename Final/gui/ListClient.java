@@ -1,10 +1,7 @@
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Scanner;
+import java.util.ArrayList;
 
 public class ListClient {
 
@@ -12,9 +9,9 @@ public class ListClient {
     String serverHostName = "192.168.1.1";
     int serverPortNumber = 42880;
     ServerListener sl;
+    public ArrayList<FoundObject> objects = new ArrayList<>();
 
     ListClient() {
-        // 1. CONNECT TO THE SERVER
         try {
             serverSocket = new Socket(serverHostName, serverPortNumber);
         } catch (UnknownHostException e) {
@@ -23,50 +20,48 @@ public class ListClient {
             e.printStackTrace();
         }
 
-        // 2. SPAWN A LISTENER FOR THE SERVER. THIS WILL KEEP RUNNING
-        // when a message is received, an appropriate method is called
         sl = new ServerListener(this, serverSocket);
         new Thread(sl).start();
+    }
 
-        PrintWriter out;
+    public int sendMessage(String s) {
+        PrintWriter out=null;
         try {
             out = new PrintWriter(new BufferedOutputStream(serverSocket.getOutputStream()));
-
-            // 3. SEND THREE WISHES TO SERVER
-            out.println("wish 1:  one million bucks ");
-            out.flush(); // force the output
-            out.println("wish 2: uh oh! ");
-            out.flush(); // force the output
-            out.println("wish 3: get rid of the bucks ");
-            out.flush(); // force the output
-
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            return 1;
         }
 
-
-
+        out.print(s);
+        out.flush();
+        return 0;
     }
 
     public void handleMessage(String s) {
         System.out.println(s);
+        if(s.contains("WIDTH")) {
+            handleObjectFound(s);
+        }
     }
-
-    public static void main(String[] args) {
-        ListClient lc = new ListClient();
-    } // end of main method
-
-} // end of ListClient
+    
+    public void handleObjectFound(String s) {
+        String[] object = s.split(";");
+        int width = Integer.parseInt(object[0].split(":")[1]);
+        int location = Integer.parseInt(object[1].split(":")[1]);
+        int distance = Integer.parseInt(object[2].split(":")[1]);
+        objects.add(new FoundObject(width,location,distance));
+    }
+}
 
 class ServerListener implements Runnable {
     ListClient lc;
-    Scanner in; // this is used to read which is a blocking call
+    BufferedReader in;
 
     ServerListener(ListClient lc, Socket s) {
         try {
             this.lc = lc;
-            in = new Scanner(new BufferedInputStream(s.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,11 +69,15 @@ class ServerListener implements Runnable {
 
     @Override
     public void run() {
-        while (true) { // run forever
-            System.out.println("Client - waiting to read");
-            String s = in.nextLine();
+        System.out.println("Client - waiting to read");
+        while (true) {
+            String s = null;
+            try {
+                s = in.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             lc.handleMessage(s);
         }
-
     }
 }
