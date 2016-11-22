@@ -25,7 +25,6 @@ public class Main {
     }
 
     private void prepareGUI(){
-//        client = new ListClient();
         mainFrame = new JFrame("Java SWING Examples");
         mainFrame.setSize(500,600);
         mainFrame.setLayout(new GridLayout(3, 1));
@@ -38,11 +37,13 @@ public class Main {
                 System.exit(0);
             }
         });
+        robotViewPanel = new RobotViewPanel(new ArrayList<FoundObject>());
+        client = new ListClient(robotViewPanel);
+
         arrowpad = new JPanel();
         optionPanel = new JPanel();
         arrowpad.setLayout(new GridLayout(3,3,1,1));
         optionPanel.setLayout(new GridLayout(3,3,1,1));
-        robotViewPanel = new RobotViewPanel(new ArrayList<FoundObject>());
 
 
         mainFrame.add(arrowpad);
@@ -146,6 +147,10 @@ public class Main {
                     break;
                 case "sweep":
                     handleSweep();
+                    break;
+                case "2":
+                    client.sendMessage("m");
+                    break;
                 default:
                     statusLabel.setText("Button");
             }
@@ -172,8 +177,7 @@ public class Main {
         }
 
         private void handleSweep() {
-            robotViewPanel.repaint(getSweepData());
-            robotViewPanel.revalidate();
+            client.sendMessage("s");
         }
     }
 }

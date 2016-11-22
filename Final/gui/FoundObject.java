@@ -8,4 +8,8 @@ public class FoundObject {
         this.distance = distance;
         this.location = location;
     }
+
+    public String toString() {
+        return "Dist: " + distance + "Width: " + width + "Location: " + location;
+    }
 }

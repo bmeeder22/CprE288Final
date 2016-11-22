@@ -10,7 +10,9 @@ public class ListClient {
     ServerListener serverListener;
     private ArrayList<FoundObject> objects = new ArrayList<>();
 
-    ListClient() {
+    private RobotViewPanel robotViewPanel;
+
+    ListClient(RobotViewPanel robotViewPanel) {
         try {
             serverSocket = new Socket(serverHostName, serverPortNumber);
         } catch (Exception e) {
@@ -18,7 +20,12 @@ public class ListClient {
         }
 
         serverListener = new ServerListener(this, serverSocket);
+        this.robotViewPanel = robotViewPanel;
         new Thread(serverListener).start();
+    }
+
+    public ArrayList<FoundObject> getObjects() {
+        return objects;
     }
 
     public int sendMessage(String s) {
@@ -40,18 +47,30 @@ public class ListClient {
         if(s.contains("WIDTH")) {
             handleObjectFound(s);
         }
+        else if(s.equals("start_sweep")) {
+            objects.clear();
+            robotViewPanel.addText("Sweeping...");
+        }
+        else if(s.equals("end_sweep")) {
+            sendSweepData();
+            robotViewPanel.removeText();
+            System.out.println(objects.toString());
+        }
+    }
+
+    private void sendSweepData() {
+        System.out.println(robotViewPanel);
+        System.out.println(objects);
+        robotViewPanel.repaint(objects);
+        robotViewPanel.revalidate();
     }
     
-    public void handleObjectFound(String s) {
+    private void handleObjectFound(String s) {
         String[] object = s.split(";");
         int width = Integer.parseInt(object[0].split(":")[1]);
         int location = Integer.parseInt(object[1].split(":")[1]);
         int distance = Integer.parseInt(object[2].split(":")[1]);
         objects.add(new FoundObject(width,location,distance));
-    }
-
-    public ArrayList<FoundObject> getObjects() {
-        return objects;
     }
 }
 

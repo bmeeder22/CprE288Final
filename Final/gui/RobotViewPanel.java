@@ -7,6 +7,7 @@ public class RobotViewPanel extends JPanel {
 
     private ArrayList<FoundObject> objects;
     private Graphics g;
+    String message;
 
     public RobotViewPanel(ArrayList<FoundObject> objects) {
         setBorder(BorderFactory.createLineBorder(Color.black));
@@ -17,6 +18,7 @@ public class RobotViewPanel extends JPanel {
         super.paintComponent(g);
         this.g = g;
 
+        renderMessage();
         renderRings();
         renderObjects();
     }
@@ -24,6 +26,29 @@ public class RobotViewPanel extends JPanel {
     public void repaint(ArrayList<FoundObject> newObjects) {
         objects = newObjects;
         super.repaint();
+        revalidate();
+    }
+
+    public void addText(String s) {
+        message = s;
+        super.repaint();
+        revalidate();
+    }
+
+    public void removeText() {
+        message = null;
+        super.repaint();
+        revalidate();
+    }
+
+    private void renderMessage() {
+        if(message != null) {
+            g.drawString(message, 10, 10);
+        }
+        else {
+            g.setColor(new Color(238, 238, 238));
+            g.fillRect(0,0,150,30);
+        }
     }
 
     private void renderRings() {
@@ -68,8 +93,6 @@ public class RobotViewPanel extends JPanel {
 
         return coords;
     }
-
-
 
     private double degreesToRadians(int degrees) {
         return degrees*(Math.PI/180);
