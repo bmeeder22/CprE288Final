@@ -22,18 +22,32 @@ void servo_timer_init(){
 	TIMER1_TBPR_R = pulse_period >> 16; //set the upper 8 bits of the interval
 
 	TIMER1_CTL_R |= 0x0100; //enable timer
+
+	move_servo(90);
+	timer_waitMillis(500);
 }
 
-void move_servo(degree){
-	unsigned int out = degree*(133) + 10000;
-//	if(direction == 1){
-//		lcd_printf("%d inc",out);
-//	}
-//	else{
-//		lcd_printf("%d dec",out);
-//	}
+void move_servo(int degree){
+	//800cyc/ms
+	//out=-4.44*degree+1600
+
+	unsigned int out = degree*(160) + 6400;
+//	unsigned int out = degree*(-4.44) + 1600;
+
 	TIMER1_TBMATCHR_R = (320000 - out) & 0xFFFF;
 	TIMER1_TBPMR_R = (320000 - out) >> 16;
+}
+
+unsigned int move_servo_return(int degree){
+	//800cyc/ms
+	//out=-4.44*degree+1600
+
+	unsigned int out = degree*(160) + 6400;
+//	unsigned int out = degree*(-4.44) + 1600;
+
+	TIMER1_TBMATCHR_R = (320000 - out) & 0xFFFF;
+	TIMER1_TBPMR_R = (320000 - out) >> 16;
+	return out;
 }
 
 

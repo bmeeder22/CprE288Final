@@ -1,0 +1,26 @@
+/*
+ * sweep.h
+ *
+ *  Created on: Nov 17, 2016
+ *      Author: nicks1
+ */
+
+#ifndef API_SWEEP_H_
+#define API_SWEEP_H_
+
+#include "api/uart.h"
+#include "api/Timer.h"
+#include "api/servo.h"
+#include "api/ir.h"
+#include "api/sonar.h"
+#include <string.h>
+#include <math.h>
+
+void sweep();
+int radialToRealC(double radial_width, int distanceToObject);
+double toRadians(double angle);
+void handleObjectFound(int distance);
+
+#define	M_PI		3.14159265358979323846
+
+#endif /* API_SWEEP_H_ */

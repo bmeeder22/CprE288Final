@@ -13,6 +13,8 @@
 #include <string.h>
 #include <inc/tm4c123gh6pm.h>
 
+#include "Timer.h"
+
 #define BIT0		0x01
 #define BIT1		0x02
 #define BIT2		0x04
@@ -23,8 +25,8 @@
 #define BIT7		0x80
 
 void servo_timer_init();
-
-void move_servo(degree);
+void move_servo(int degree);
+unsigned int move_servo_return(int degree);
 
 
 
