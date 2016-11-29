@@ -10,6 +10,7 @@
 #include "api/sonar.h"
 #include "api/sweep.h"
 #include "api/button.h"
+#include "api/movement.h"
 
 #include <string.h>
 #include <math.h>
@@ -21,6 +22,9 @@ void calibrateServo();
 
 int main(void) {
 	init_all();
+	oi_t *sensor = oi_alloc();
+	oi_init(sensor);
+	move_forward(sensor, 1000);
 
 	while(1){
 		char in = uart_receive();
