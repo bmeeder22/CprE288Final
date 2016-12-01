@@ -79,11 +79,10 @@ void uart_init(void){
 
 char* uart_receivePacket() {
 	int i;
-	char* out;
-	for(i=0;i<3;i++) {
+	char out[5] = "aaaa\0";
+	for(i=0;i<4;i++) {
 		out[i] = uart_receive();
 	}
-	out[3] = '\0';
 	return out;
 }
 
