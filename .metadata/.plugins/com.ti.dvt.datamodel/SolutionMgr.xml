@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_80" class="java.beans.XMLDecoder">
+ <object class="com.ti.dvt.datamodel.solution.SolutionManager$PersistState" id="SolutionManager$PersistState0">
+  <void class="com.ti.dvt.datamodel.solution.SolutionManager$PersistState" method="getField">
+   <string>defaultSolution</string>
+   <void method="set">
+    <object idref="SolutionManager$PersistState0"/>
+    <string>Z:\CPRE288\CprE288Final\dvt\AnalysisSolutionsTemp\AnalysisSolution1480445534074\null</string>
+   </void>
+  </void>
+ </object>
+<void class="com.ti.dvt.datamodel.solution.SolutionManager$PersistState" id="Field0" method="getField">
+ <string>openedSolutions</string>
+ <void id="ArrayList0" method="get">
+  <object idref="SolutionManager$PersistState0"/>
+  <void method="add">
+<<<<<<< HEAD
+   <string>U:\CprE288Final\dvt\AnalysisSolutionsTemp\AnalysisSolution1480441581996\null</string>
+=======
+   <string>C:\ti\ccsv6\ccs_base\dvt_4.1.0.201602080440\CodeGen\solutions\CodeGenCoverage</string>
+>>>>>>> 68e5571cb96e92a052cde756a56e010460d37949
+  </void>
+  <void method="add">
+   <string>Z:\CPRE288\CprE288Final\dvt\AnalysisSolutionsTemp\AnalysisSolution1480445534074\null</string>
+  </void>
+ </void>
+</void>
+<void idref="ArrayList0"/>
+</java>

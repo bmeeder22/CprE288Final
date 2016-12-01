@@ -14,12 +14,14 @@ ORDERED_OBJS += \
 "./tm4c123gh6pm_startup_ccs.obj" \
 "./api/Timer.obj" \
 "./api/WiFi.obj" \
-"./api/cliffSensor.obj" \
+"./api/button.obj" \
 "./api/ir.obj" \
 "./api/lcd.obj" \
 "./api/movement.obj" \
+"./api/open_interface.obj" \
 "./api/servo.obj" \
 "./api/sonar.obj" \
+"./api/sweep.obj" \
 "./api/uart.obj" \
 "../tm4c123gh6pm.cmd" \
 $(GEN_CMDS__FLAG) \
@@ -165,8 +167,8 @@ Rover.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "api\Timer.d" "api\WiFi.d" "api\cliffSensor.d" "api\ir.d" "api\lcd.d" "api\movement.d" "api\servo.d" "api\sonar.d" "api\uart.d" 
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "api\Timer.obj" "api\WiFi.obj" "api\cliffSensor.obj" "api\ir.obj" "api\lcd.obj" "api\movement.obj" "api\servo.obj" "api\sonar.obj" "api\uart.obj" 
+	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "api\Timer.d" "api\WiFi.d" "api\button.d" "api\ir.d" "api\lcd.d" "api\movement.d" "api\open_interface.d" "api\servo.d" "api\sonar.d" "api\sweep.d" "api\uart.d" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "api\Timer.obj" "api\WiFi.obj" "api\button.obj" "api\ir.obj" "api\lcd.obj" "api\movement.obj" "api\open_interface.obj" "api\servo.obj" "api\sonar.obj" "api\sweep.obj" "api\uart.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

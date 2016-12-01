@@ -77,6 +77,16 @@ void uart_init(void){
     UART1_CTL_R = (UART_CTL_RXE | UART_CTL_TXE | UART_CTL_UARTEN);
 }
 
+char* uart_receivePacket() {
+	int i;
+	char* out;
+	for(i=0;i<3;i++) {
+		out[i] = uart_receive();
+	}
+	out[3] = '\0';
+	return out;
+}
+
 //blocking call that sends 1 char over uart1
 void uart_sendChar(char data){
     //check to see if empty
@@ -115,7 +125,6 @@ int uart_receive(void){
     }
 
     return data;
-
 }
 
 void uart_flush(void) {
@@ -130,14 +139,25 @@ void uart_flush(void) {
 //sends entire char array over uart1
 //input first element in char array
 void uart_sendStr(const char *data){
-
     while(*data != '\0') {
         uart_sendChar(*data);
         data++;
     }
 
-    //send null terminate
-    uart_sendChar(0);
+    uart_sendChar('\n');
+}
+
+void uart_sendStrNoNewline(const char *data) {
+	while(*data != '\0') {
+		uart_sendChar(*data);
+		data++;
+	}
+}
+
+void uart_sendNum(int num) {
+	char str[15];
+	sprintf(str, "%d", num);
+	uart_sendStrNoNewline(str);
 }
 
 //Interrupt handler for uart1

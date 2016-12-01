@@ -34,5 +34,10 @@ void uart_sendBuffer(char* buffer, int length);
 
 void UART1_Handler(void);
 
+char* uart_receivePacket();
+
+void uart_sendNum(int num);
+
+void uart_sendStrNoNewline(const char *data);
 
 #endif /* UART_H_ */

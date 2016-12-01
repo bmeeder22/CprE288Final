@@ -1,5 +1,9 @@
 #include "sonar.h"
 
+int count=0;
+volatile unsigned rising_time; // start time of the return pulse
+volatile unsigned falling_time; // end time of the return pulse
+
 void sonar_timer_init(){
   	SYSCTL_RCGCGPIO_R |= SYSCTL_RCGCGPIO_R1; // Turn on clock to GPIOportB
   	GPIO_PORTB_DEN_R |= 0x08;
@@ -45,7 +49,13 @@ unsigned sonar_read() {
  	count = 0;
  	unsigned distance = ping_read();
  	return distance;
-  }
+}
+
+unsigned time2dist(unsigned time) {
+	double interval = time*17;
+	int out = interval/1600;
+	return out;
+}
 
   unsigned ping_read() {
   	unsigned elapsed_time = falling_time-rising_time;

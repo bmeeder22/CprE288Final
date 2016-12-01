@@ -16,9 +16,7 @@
 #include <string.h>
 #include <inc/tm4c123gh6pm.h>
 
-volatile unsigned rising_time; // start time of the return pulse
-volatile unsigned falling_time; // end time of the return pulse
-int count = 0;
+#include "Timer.h"
 
 void sonar_timer_init();
 
@@ -29,5 +27,7 @@ unsigned sonar_read();
 unsigned ping_read();
 
 void send_pulse();
+
+unsigned time2dist(unsigned time);
 
 #endif /* SONAR_H_ */
