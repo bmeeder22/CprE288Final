@@ -1,12 +1,18 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
     private JFrame mainFrame;
     private JLabel statusLabel;
     private JPanel arrowpad;
     private JPanel optionPanel;
+    private ListClient client;
+    RobotViewPanel robotViewPanel;
+
+    private JTextArea numberField;
 
     public Main(){
         prepareGUI();
@@ -22,7 +28,7 @@ public class Main {
 
     private void prepareGUI(){
         mainFrame = new JFrame("Java SWING Examples");
-        mainFrame.setSize(500,500);
+        mainFrame.setSize(500,600);
         mainFrame.setLayout(new GridLayout(3, 1));
 
         statusLabel = new JLabel("",JLabel.CENTER);
@@ -33,6 +39,9 @@ public class Main {
                 System.exit(0);
             }
         });
+        robotViewPanel = new RobotViewPanel(new ArrayList<FoundObject>());
+        client = new ListClient(robotViewPanel);
+
         arrowpad = new JPanel();
         optionPanel = new JPanel();
         arrowpad.setLayout(new GridLayout(3,3,1,1));
@@ -41,17 +50,27 @@ public class Main {
 
         mainFrame.add(arrowpad);
         mainFrame.add(optionPanel);
-        mainFrame.add(statusLabel);
+        mainFrame.add(robotViewPanel);
         mainFrame.setVisible(true);
     }
 
+    private ArrayList<FoundObject> getRandomObject() {
+        ArrayList<FoundObject> testArray = new ArrayList<FoundObject>();
+        int randomWidth = ThreadLocalRandom.current().nextInt(0, 20 + 1);
+        int randomDistance = ThreadLocalRandom.current().nextInt(25, 70 + 1);
+        int randomLocation = ThreadLocalRandom.current().nextInt(0, 180 + 1);
+
+        testArray.add(new FoundObject(randomWidth,randomLocation,randomDistance));
+        return testArray;
+    }
+
     private void renderOptionPanel() {
-        JButton button1 = new JButton("1");
+        JButton button1 = new JButton("Sweep");
         JButton button2 = new JButton("2");
         JButton button3 = new JButton("3");
         JButton button4 = new JButton("4");
 
-        button1.setActionCommand("1");
+        button1.setActionCommand("sweep");
         button2.setActionCommand("2");
         button3.setActionCommand("3");
         button4.setActionCommand("4");
@@ -72,6 +91,7 @@ public class Main {
         JButton backButton = new JButton("Backwards");
         JButton leftButton = new JButton("Left");
         JButton rightButton = new JButton("Right");
+        numberField = new JTextArea("");
 
         forwardButton.setActionCommand("Forward");
         backButton.setActionCommand("Backwards");
@@ -90,7 +110,7 @@ public class Main {
 
 //        Row2
         arrowpad.add(leftButton);
-        arrowpad.add(new JLabel());
+        arrowpad.add(numberField);
         arrowpad.add(rightButton);
 
 //        Row3
@@ -101,9 +121,20 @@ public class Main {
         mainFrame.setVisible(true);
     }
 
+    private ArrayList<FoundObject> getSweepData() {
+        ArrayList<FoundObject> start = client.getObjects();
+        ArrayList<FoundObject> end = client.getObjects();
+        while(start == end) {
+            end = client.getObjects();
+        }
+
+        return end;
+    }
+
     private class ButtonClickListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
+            robotViewPanel.removeText();
 
             switch(command) {
                 case "Forward":
@@ -118,6 +149,12 @@ public class Main {
                 case "Right":
                     handleRight();
                     break;
+                case "sweep":
+                    handleSweep();
+                    break;
+                case "2":
+                    client.sendMessage("0");
+                    break;
                 default:
                     statusLabel.setText("Button");
             }
@@ -125,18 +162,30 @@ public class Main {
 
         private void handleRight() {
             statusLabel.setText("Right");
+            String message = "r" + numberField.getText();
+            client.sendMessage(message);
         }
 
         private  void handleLeft() {
             statusLabel.setText("Left");
+            String message = "l" + numberField.getText();
+            client.sendMessage(message);
         }
 
         private void handleForward() {
             statusLabel.setText("Forward");
+            String message = "f" + numberField.getText();
+            client.sendMessage(message);
         }
 
         private void handleBack() {
             statusLabel.setText("Backwards");
+            String message = "b" + numberField.getText();
+            client.sendMessage(message);
+        }
+
+        private void handleSweep() {
+            client.sendMessage("swep");
         }
     }
 }
