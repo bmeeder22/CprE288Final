@@ -22,6 +22,7 @@ int radialToRealC(double radial_width, int distanceToObject);
 double toRadians(double angle);
 void handleObjectFound(int distance);
 int getIRReading();
+int getAccurateDistance(int radialWidth);
 
 #define	M_PI		3.14159265358979323846
 

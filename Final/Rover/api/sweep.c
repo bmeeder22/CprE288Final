@@ -7,21 +7,20 @@ int smallestLocation = 10000;
 int smallestWidth = 10000;
 
 void sweep() {
-    while(degrees>-1) {
+    while(degrees>0) {
         move_servo(degrees);
-        degrees -= 2;
+        degrees --;
 
         int IRDist = ir_read();
         int SonarDist = sonar_read();
         SonarDist = SonarDist/10;
 
-        lcd_printf("%d", degrees);
-
-        if(SonarDist < 85) { // was if(SonarDist < 20 && SonarDist!=0)
+        if(SonarDist < 85 && IRDist > 800) { // was if(SonarDist < 20 && SonarDist!=0)
+        	lcd_printf("Sonar %d, IR %d", SonarDist, IRDist);
             handleObjectFound(SonarDist);
         }
 
-        timer_waitMillis(500);
+        timer_waitMillis(100);
     }
 
     degrees = 180;
@@ -29,11 +28,12 @@ void sweep() {
     smallestLocation = 10000;
     smallestWidth = 10000;
 
-    move_servo(smallestLocation);
+    move_servo(90);
     timer_waitMillis(500);
 }
 
 void handleObjectFound(int distance) {
+	timer_waitMillis(100);
     unsigned int start = degrees;
     int IRDist = ir_read();
     int IRStart = ir_read();
@@ -51,6 +51,8 @@ void handleObjectFound(int distance) {
     int real_width = radialToRealC(radial_width, distance);
 
     if(real_width>2) {
+    	distance = getAccurateDistance(radial_width);
+    	real_width = radialToRealC(radial_width, distance);
     	objCount ++;
         smallestWidth = real_width;
         smallestLocation = start;
@@ -63,6 +65,17 @@ void handleObjectFound(int distance) {
         uart_sendNum(distance);
         uart_sendStrNoNewline("\n");
     }
+    timer_waitMillis(100);
+}
+
+int getAccurateDistance(int radialWidth) {
+	move_servo(degrees-radialWidth/2.0);
+	timer_waitMillis(200);
+	int SonarDist = sonar_read()/10.0;
+	timer_waitMillis(50);
+	move_servo(degrees);
+	timer_waitMillis(200);
+	return SonarDist;
 }
 
 int getIRReading() {
@@ -76,7 +89,9 @@ int getIRReading() {
 
 int radialToRealC(double radial_width, int distanceToObject) {
     double radians = toRadians(radial_width);
-    return (int)(2*distanceToObject*sin(radians));
+//    return (int)(2*distanceToObject*sin(radians));
+
+	return 2*distanceToObject*tan(radians/2.0);
 }
 
 double toRadians(double angle) {
