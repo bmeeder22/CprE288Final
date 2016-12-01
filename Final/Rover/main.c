@@ -73,8 +73,8 @@ void init_all() {
 //	calibrateIR();
 
 	/*****WIFI***********/
-	WiFi_start("aaaaaaaa\0");
-	while(1) {}
+//	WiFi_start("aaaaaaaa\0");
+//	while(1) {}
 }
 
 void calibrateIR() {

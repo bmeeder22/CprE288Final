@@ -12,7 +12,7 @@ void move_forward(oi_t *sensor, int millimeters);
 
 void move_backwards(oi_t *sensor, int millimeters);
 
-int checkLine(oi_t *sensor);
+int checkLine(oi_t *sensor, int sum);
 
 int checkObstacle(oi_t *sensor);
 
