@@ -12,6 +12,8 @@ public class Main {
     private ListClient client;
     RobotViewPanel robotViewPanel;
 
+    private JTextArea numberField;
+
     public Main(){
         prepareGUI();
     }
@@ -89,6 +91,7 @@ public class Main {
         JButton backButton = new JButton("Backwards");
         JButton leftButton = new JButton("Left");
         JButton rightButton = new JButton("Right");
+        numberField = new JTextArea("");
 
         forwardButton.setActionCommand("Forward");
         backButton.setActionCommand("Backwards");
@@ -107,7 +110,7 @@ public class Main {
 
 //        Row2
         arrowpad.add(leftButton);
-        arrowpad.add(new JLabel());
+        arrowpad.add(numberField);
         arrowpad.add(rightButton);
 
 //        Row3
@@ -131,6 +134,7 @@ public class Main {
     private class ButtonClickListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
+            robotViewPanel.removeText();
 
             switch(command) {
                 case "Forward":
@@ -149,7 +153,7 @@ public class Main {
                     handleSweep();
                     break;
                 case "2":
-                    client.sendMessage("m");
+                    client.sendMessage("0");
                     break;
                 default:
                     statusLabel.setText("Button");
@@ -158,26 +162,30 @@ public class Main {
 
         private void handleRight() {
             statusLabel.setText("Right");
-            client.sendMessage("r");
+            String message = "r" + numberField.getText();
+            client.sendMessage(message);
         }
 
         private  void handleLeft() {
             statusLabel.setText("Left");
-            client.sendMessage("l");
+            String message = "l" + numberField.getText();
+            client.sendMessage(message);
         }
 
         private void handleForward() {
             statusLabel.setText("Forward");
-            client.sendMessage("f");
+            String message = "f" + numberField.getText();
+            client.sendMessage(message);
         }
 
         private void handleBack() {
             statusLabel.setText("Backwards");
-            client.sendMessage("b");
+            String message = "b" + numberField.getText();
+            client.sendMessage(message);
         }
 
         private void handleSweep() {
-            client.sendMessage("s");
+            client.sendMessage("swep");
         }
     }
 }

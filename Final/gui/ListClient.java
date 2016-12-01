@@ -11,6 +11,7 @@ public class ListClient {
     private ArrayList<FoundObject> objects = new ArrayList<>();
 
     private RobotViewPanel robotViewPanel;
+    boolean error;
 
     ListClient(RobotViewPanel robotViewPanel) {
         try {
@@ -19,6 +20,7 @@ public class ListClient {
             e.printStackTrace();
         }
 
+        error = false;
         serverListener = new ServerListener(this, serverSocket);
         this.robotViewPanel = robotViewPanel;
         new Thread(serverListener).start();
@@ -29,6 +31,11 @@ public class ListClient {
     }
 
     public int sendMessage(String s) {
+        if(s.startsWith("f") || s.startsWith("b") || s.startsWith("l") || s.startsWith("r")) {
+            error = false;
+            robotViewPanel.addText("Moving...");
+        }
+
         PrintWriter out=null;
         try {
             out = new PrintWriter(new BufferedOutputStream(serverSocket.getOutputStream()));
@@ -43,6 +50,8 @@ public class ListClient {
     }
 
     public void handleMessage(String s) {
+        s = s.replace(new StringBuilder().append((char)0), "");
+
         System.out.println(s);
         if(s.contains("WIDTH")) {
             handleObjectFound(s);
@@ -54,13 +63,25 @@ public class ListClient {
         else if(s.equals("end_sweep")) {
             sendSweepData();
             robotViewPanel.removeText();
-            System.out.println(objects.toString());
+        }
+        else if(s.contains("CLIFF")) {
+            robotViewPanel.addText("Cliff found!");
+            error = true;
+        }
+        else if(s.contains("OBSTACLE")) {
+            robotViewPanel.addText("Obstacle found!");
+            error = true;
+        }
+        else if(s.contains("LINE")) {
+            robotViewPanel.addText("Line found!");
+            error = true;
+        }
+        else if(s.contains("EndMove") && !error) {
+            robotViewPanel.removeText();
         }
     }
 
     private void sendSweepData() {
-        System.out.println(robotViewPanel);
-        System.out.println(objects);
         robotViewPanel.repaint(objects);
         robotViewPanel.revalidate();
     }
