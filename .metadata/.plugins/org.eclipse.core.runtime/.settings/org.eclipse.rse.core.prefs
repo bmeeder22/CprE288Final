@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 activeuserprofiles=Team;co2041-03;co2041-05
+=======
+activeuserprofiles=Team;co2041-05;co2041-09
+>>>>>>> 68e5571cb96e92a052cde756a56e010460d37949
 eclipse.preferences.version=1
 org.eclipse.rse.systemtype.local.systemType.defaultUserId=nicks1
 useridperkey=co2041-05.Local\=nicks1;

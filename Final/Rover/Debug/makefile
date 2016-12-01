@@ -15,10 +15,10 @@ ORDERED_OBJS += \
 "./api/Timer.obj" \
 "./api/WiFi.obj" \
 "./api/button.obj" \
-"./api/cliffSensor.obj" \
 "./api/ir.obj" \
 "./api/lcd.obj" \
 "./api/movement.obj" \
+"./api/open_interface.obj" \
 "./api/servo.obj" \
 "./api/sonar.obj" \
 "./api/sweep.obj" \
@@ -154,7 +154,7 @@ all: Rover.out
 Rover.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_15.12.1.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me -g --gcc --define=ccs="ccs" --define=PART_TM4C123GH6PM --diag_wrap=off --diag_warning=225 --display_error_number --abi=eabi -z -m"Rover.map" --stack_size=2048 --heap_size=1024 -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_15.12.1.LTS/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_15.12.1.LTS/include" --reread_libs --display_error_number --warn_sections --diag_wrap=off --xml_link_info="Rover_linkInfo.xml" --rom_model -o "Rover.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_15.12.1.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me -g --gcc --define=ccs="ccs" --define=PART_TM4C123GH6PM --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"Rover.map" --stack_size=2048 --heap_size=1024 -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_15.12.1.LTS/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_15.12.1.LTS/include" --reread_libs --warn_sections --diag_wrap=off --display_error_number --xml_link_info="Rover_linkInfo.xml" --rom_model -o "Rover.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -167,8 +167,8 @@ Rover.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "api\Timer.d" "api\WiFi.d" "api\button.d" "api\cliffSensor.d" "api\ir.d" "api\lcd.d" "api\movement.d" "api\servo.d" "api\sonar.d" "api\sweep.d" "api\uart.d" 
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "api\Timer.obj" "api\WiFi.obj" "api\button.obj" "api\cliffSensor.obj" "api\ir.obj" "api\lcd.obj" "api\movement.obj" "api\servo.obj" "api\sonar.obj" "api\sweep.obj" "api\uart.obj" 
+	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "api\Timer.d" "api\WiFi.d" "api\button.d" "api\ir.d" "api\lcd.d" "api\movement.d" "api\open_interface.d" "api\servo.d" "api\sonar.d" "api\sweep.d" "api\uart.d" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "api\Timer.obj" "api\WiFi.obj" "api\button.obj" "api\ir.obj" "api\lcd.obj" "api\movement.obj" "api\open_interface.obj" "api\servo.obj" "api\sonar.obj" "api\sweep.obj" "api\uart.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
