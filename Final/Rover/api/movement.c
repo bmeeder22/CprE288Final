@@ -28,12 +28,10 @@ int checkLine(oi_t *sensor, int sum){
 			int temp = sum;
 			if (sensor->cliffLeftSignal > tolerance || sensor->cliffFrontLeftSignal > tolerance){
 				move_backwards(sensor, sum);
-	//			lcd_printf("%i sum: %i", (int) (atan((double) temp/200.0) * 180 / 3.14 + 90), temp);
 				turn_cclockwise(sensor, (int) (atan( (double) temp/200.0) * 180 / 3.14 + 90));
 			}
 			else if (sensor->cliffRightSignal > tolerance || sensor->cliffFrontRightSignal > tolerance){
 				move_backwards(sensor, sum);
-	//			lcd_printf("%i sum: %i", (int) (atan((double) temp/200.0) * 180 / 3.14 + 90), temp);
 				turn_clockwise(sensor, (int) (atan( (double) temp/200.0) * 180 / 3.14 + 90));
 			}
 		}

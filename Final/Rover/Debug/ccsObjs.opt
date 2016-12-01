@@ -1,1 +1,0 @@
-"./main.obj" "./tm4c123gh6pm_startup_ccs.obj" "./api/Timer.obj" "./api/WiFi.obj" "./api/button.obj" "./api/ir.obj" "./api/lcd.obj" "./api/movement.obj" "./api/open_interface.obj" "./api/servo.obj" "./api/sonar.obj" "./api/sweep.obj" "./api/uart.obj" "../tm4c123gh6pm.cmd" -llibc.a -l"C:/ti/TivaWare_C_Series-2.1.2.111/driverlib/ccs/Debug/driverlib.lib" 
