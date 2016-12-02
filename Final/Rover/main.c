@@ -16,49 +16,58 @@
 #include <math.h>
 
 void init_all();
-void handleCommand(char in);
+void handleCommand(char* in);
 void calibrateIR();
 void calibrateServo();
+int parseInt(char hundreths, char tenths, char ones);
 
-int main(void) {
+oi_t *sensor;
+
+  int main(void) {
 	init_all();
-	oi_t *sensor = oi_alloc();
-	oi_init(sensor);
-	move_forward(sensor, 1000);
 
 	while(1){
-		char in = uart_receive();
+		char* in = uart_receivePacket();
 		handleCommand(in);
 	}
 }
 
-void handleCommand(char in) {
-	if(in == 'f') {
-		lcd_printf("%s", "FORWARD");
-		uart_sendStr("FORWARD");
+void handleCommand(char* in) {
+	if(in[0] == 'f') {
+		int number = parseInt(in[1],in[2],in[3]);
+		move_forward(sensor, number);
+		uart_sendStr("EndMove");
 	}
-	if(in == 'b') {
-		lcd_printf("%s", "BACKWARDS");
-		uart_sendStr("BACKWARDS");
+	if(in[0] == 'b') {
+		int number = parseInt(in[1],in[2],in[3]);
+		move_backwards(sensor, number);
+		uart_sendStr("EndMove");
 	}
-	if(in == 'l') {
-		lcd_printf("%s", "LEFT");
-		uart_sendStr("LEFT");
+	if(in[0] == 'l') {
+		int number = parseInt(in[1],in[2],in[3]);
+		turn_cclockwise(sensor, number);
+		uart_sendStr("EndMove");
 	}
-	if(in == 'r') {
-		lcd_printf("%s", "RIGHT");
-		uart_sendStr("RIGHT");
+	if(in[0] == 'r') {
+		int number = parseInt(in[1],in[2],in[3]);
+		turn_clockwise(sensor, number);
+		uart_sendStr("EndMove");
 	}
-	if(in == 's') {
+	if(in[0] == 's') {
 		uart_sendStr("start_sweep");
 		sweep();
 		uart_sendStr("end_sweep");
 	}
-	if(in == 'm') {
-		move_servo(180);
-		timer_waitMillis(800);
-		move_servo(0);
+	if(in[0] == 'm') {
+		int number = parseInt(in[1],in[2],in[3]);
 	}
+}
+
+int parseInt(char hundreths, char tenths, char ones) {
+	int hundred = hundreths - '0';
+	int ten = tenths - '0';
+	int one = ones - '0';
+	return hundred*100+ten*10+one;
 }
 
 void init_all() {
@@ -75,6 +84,9 @@ void init_all() {
 	/*****WIFI***********/
 //	WiFi_start("aaaaaaaa\0");
 //	while(1) {}
+
+	sensor = oi_alloc();
+	oi_init(sensor);
 }
 
 void calibrateIR() {

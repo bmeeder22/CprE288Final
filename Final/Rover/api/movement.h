@@ -18,4 +18,16 @@ int checkObstacle(oi_t *sensor);
 
 int checkCliff(oi_t *sensor);
 
+int checkBlack(oi_t *sensor, int sum);
+
+void move_forward_for_angle(oi_t *sensor);
+
+int checkLineTurn(oi_t *sensor, int sum);
+
+void handleLineFound(oi_t *sensor, int sum);
+
+void turnUntilCenter(oi_t *sensor, int direction);
+
+void finishHandleLine(oi_t *sensor, int direction);
+
 #endif

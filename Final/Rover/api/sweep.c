@@ -15,7 +15,7 @@ void sweep() {
         int SonarDist = sonar_read();
         SonarDist = SonarDist/10;
 
-        if(SonarDist < 85 && IRDist > 800) { // was if(SonarDist < 20 && SonarDist!=0)
+        if(SonarDist < 85 && IRDist > 700) { // was if(SonarDist < 20 && SonarDist!=0)
         	lcd_printf("Sonar %d, IR %d", SonarDist, IRDist);
             handleObjectFound(SonarDist);
         }
@@ -39,8 +39,8 @@ void handleObjectFound(int distance) {
     int IRStart = ir_read();
 //    int distance = sonar_read()/10;
 
-    while(IRDist > 800) { // was while(IRDist > 800)
-        degrees -= 2;
+    while(IRDist > 700) { // was while(IRDist > 800)
+        degrees -= 1;
         move_servo(degrees);
         timer_waitMillis(100);
         IRDist = ir_read();
