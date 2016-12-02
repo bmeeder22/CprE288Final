@@ -72,8 +72,16 @@ public class ListClient {
             robotViewPanel.addText("Obstacle found!");
             error = true;
         }
-        else if(s.contains("LINE")) {
-            robotViewPanel.addText("Line found!");
+        else if(s.contains("LINELEFT")) {
+            robotViewPanel.addText("Line found! Left of robot");
+            error = true;
+        }
+        else if(s.contains("LINERIGHT")) {
+            robotViewPanel.addText("Line found! Right of robot");
+            error = true;
+        }
+        else if(s.contains("LINEPERP")) {
+            robotViewPanel.addText("Line found! Perp to robot");
             error = true;
         }
         else if(s.contains("EndMove") && !error) {

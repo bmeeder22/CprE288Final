@@ -30,4 +30,6 @@ void turnUntilCenter(oi_t *sensor, int direction);
 
 void finishHandleLine(oi_t *sensor, int direction);
 
+void playSong();
+
 #endif
