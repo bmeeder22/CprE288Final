@@ -163,24 +163,32 @@ public class Main {
         private void handleRight() {
             statusLabel.setText("Right");
             String message = "r" + numberField.getText();
+            if(numberField.getText().length() != 3)
+                return;
             client.sendMessage(message);
         }
 
         private  void handleLeft() {
             statusLabel.setText("Left");
             String message = "l" + numberField.getText();
+            if(numberField.getText().length() != 3)
+                return;
             client.sendMessage(message);
         }
 
         private void handleForward() {
             statusLabel.setText("Forward");
             String message = "f" + numberField.getText();
+            if(numberField.getText().length() != 3)
+                return;
             client.sendMessage(message);
         }
 
         private void handleBack() {
             statusLabel.setText("Backwards");
             String message = "b" + numberField.getText();
+            if(numberField.getText().length() != 3)
+                return;
             client.sendMessage(message);
         }
 
