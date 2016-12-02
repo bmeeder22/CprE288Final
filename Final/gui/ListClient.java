@@ -80,6 +80,10 @@ public class ListClient {
             robotViewPanel.addText("Line found! Right of robot");
             error = true;
         }
+        else if(s.contains("LINEPERP")) {
+            robotViewPanel.addText("Line found! Perp to robot");
+            error = true;
+        }
         else if(s.contains("EndMove") && !error) {
             robotViewPanel.removeText();
         }

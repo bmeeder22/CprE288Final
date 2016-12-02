@@ -9,14 +9,13 @@ volatile int foundBlack = 0;
 volatile int angle = 0;
 
 int checkBlack(oi_t *sensor, int sum){
-	int tolerance = 1400;
-	if (sensor->cliffLeftSignal < tolerance || sensor->cliffRightSignal < tolerance || sensor->cliffFrontLeftSignal < tolerance || sensor->cliffFrontRightSignal < tolerance && !done && initialDistance == 0 && !foundBlack ){
+	int blackTolerance = 1400;
+	if (sensor->cliffLeftSignal < blackTolerance || sensor->cliffRightSignal < blackTolerance || sensor->cliffFrontLeftSignal < blackTolerance || sensor->cliffFrontRightSignal < blackTolerance && !done && initialDistance == 0 && !foundBlack ) {
 		initialDistance = sum;
 		foundBlack = 1;
 		return 0;
 	}
 	else if (foundBlack && !done && initialDistance > 0){
-//		lcd_printf("%d", sum - initialDistance);
 		if (sum - initialDistance >= 90){
 			done = 1;
 			initialDistance = 0;
@@ -98,6 +97,7 @@ void handleLineFound(oi_t *sensor, int sum) {
 	int tolerance = 2650;
 	if (sensor->cliffFrontLeftSignal > tolerance && sensor->cliffFrontRightSignal > tolerance) {
 		turn_clockwise(sensor, 180);
+        uart_sendStr("LINEPERP");
 		return;
 	}
 
@@ -117,27 +117,31 @@ void handleLineFound(oi_t *sensor, int sum) {
 void turnUntilCenter(oi_t *sensor, int direction) {
 	int degrees = 0;
 	int tolerance = 2650;
-	while(!(sensor->cliffFrontLeftSignal > tolerance) || !(sensor->cliffFrontRightSignal > tolerance)) {
+	while(sensor->cliffFrontLeftSignal <= tolerance || sensor->cliffFrontRightSignal =< tolerance) {
 		if(direction == 1) {
 			//turn left
 			turn_cclockwise(sensor, 10);
 			degrees += 10;
+			uart_sendStr("LINELEFT");
 		}
 		else {
 			//turn right
 			turn_clockwise(sensor, 10);
 			degrees += 10;
+            uart_sendStr("LINERIGHT");
 		}
 	}
+    uart_sendStrNoNewline("ANGLE: ");
+    uart_sendNum(90-(degrees+12));
 	finishHandleLine(sensor, direction);
 }
 
 void finishHandleLine(oi_t *sensor, int direction) {
 	if(direction == 1) {
-		turn_clockwise(sensor, 167);
+		turn_clockwise(sensor, 168);
 	}
 	else {
-		turn_cclockwise(sensor, 167);
+		turn_cclockwise(sensor, 168);
 	}
 	uart_sendStr("LINEFINISHED");
 }
@@ -191,13 +195,7 @@ void move_forward(oi_t *sensor, int millimeters){
 		}
 
 		if(checkBlack(sensor, sum) && done){
-			uart_sendStr("WIN");
-			oi_init(oi_alloc());
-			unsigned char numNotes = 5;
-			unsigned char notes[5] = {75,74,73,72,71};//{80,78,80,75,80,78,78,77,76,0,0,0,0,0,0,0};
-			unsigned char duration[5] = {15,15,15,15,15};//{12,12,30,35,10,10,15,20,10,10,10,30,30,30,30,30};
-			oi_loadSong(0,numNotes,notes,duration);
-			oi_play_song(0);
+            playSong();
 			break;
 		}
 
@@ -205,6 +203,16 @@ void move_forward(oi_t *sensor, int millimeters){
 		sum += sensor->distance;
 	}
 	oi_setWheels(0, 0);
+}
+
+void playSong() {
+    uart_sendStr("WIN");
+    oi_init(oi_alloc());
+    unsigned char numNotes = 5;
+    unsigned char notes[5] = {75,74,73,72,71};//{80,78,80,75,80,78,78,77,76,0,0,0,0,0,0,0};
+    unsigned char duration[5] = {15,15,15,15,15};//{12,12,30,35,10,10,15,20,10,10,10,30,30,30,30,30};
+    oi_loadSong(0,numNotes,notes,duration);
+    oi_play_song(0);
 }
 
 void move_forward_for_angle(oi_t *sensor){

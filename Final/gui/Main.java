@@ -27,7 +27,7 @@ public class Main {
     }
 
     private void prepareGUI(){
-        mainFrame = new JFrame("Java SWING Examples");
+        mainFrame = new JFrame("Rover Mission Control");
         mainFrame.setSize(500,600);
         mainFrame.setLayout(new GridLayout(3, 1));
 
@@ -52,16 +52,6 @@ public class Main {
         mainFrame.add(optionPanel);
         mainFrame.add(robotViewPanel);
         mainFrame.setVisible(true);
-    }
-
-    private ArrayList<FoundObject> getRandomObject() {
-        ArrayList<FoundObject> testArray = new ArrayList<FoundObject>();
-        int randomWidth = ThreadLocalRandom.current().nextInt(0, 20 + 1);
-        int randomDistance = ThreadLocalRandom.current().nextInt(25, 70 + 1);
-        int randomLocation = ThreadLocalRandom.current().nextInt(0, 180 + 1);
-
-        testArray.add(new FoundObject(randomWidth,randomLocation,randomDistance));
-        return testArray;
     }
 
     private void renderOptionPanel() {
@@ -119,16 +109,6 @@ public class Main {
         arrowpad.add(new JLabel());
 
         mainFrame.setVisible(true);
-    }
-
-    private ArrayList<FoundObject> getSweepData() {
-        ArrayList<FoundObject> start = client.getObjects();
-        ArrayList<FoundObject> end = client.getObjects();
-        while(start == end) {
-            end = client.getObjects();
-        }
-
-        return end;
     }
 
     private class ButtonClickListener implements ActionListener{
