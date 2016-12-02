@@ -23,7 +23,7 @@ int parseInt(char hundreths, char tenths, char ones);
 
 oi_t *sensor;
 
-int main(void) {
+  int main(void) {
 	init_all();
 
 	while(1){

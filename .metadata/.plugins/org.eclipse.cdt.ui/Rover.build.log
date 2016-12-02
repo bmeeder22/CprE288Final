@@ -2,16 +2,6 @@
 **** Build of configuration Debug for project Rover ****
 
 "C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
-'Building file: ../api/movement.c'
-'Invoking: ARM Compiler'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_15.12.1.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-arm_15.12.1.LTS/include" --include_path="C:/ti/TivaWare_C_Series-2.1.2.111" -g --gcc --define=ccs="ccs" --define=PART_TM4C123GH6PM --diag_wrap=off --diag_warning=225 --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="api/movement.d" --obj_directory="api"  "../api/movement.c"
-'Finished building: ../api/movement.c'
-' '
-'Building target: Rover.out'
-'Invoking: ARM Linker'
-"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_15.12.1.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me -g --gcc --define=ccs="ccs" --define=PART_TM4C123GH6PM --diag_wrap=off --diag_warning=225 --display_error_number --abi=eabi -z -m"Rover.map" --stack_size=2048 --heap_size=1024 -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_15.12.1.LTS/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-arm_15.12.1.LTS/include" --reread_libs --display_error_number --warn_sections --diag_wrap=off --xml_link_info="Rover_linkInfo.xml" --rom_model -o "Rover.out" "./main.obj" "./tm4c123gh6pm_startup_ccs.obj" "./api/Timer.obj" "./api/WiFi.obj" "./api/button.obj" "./api/ir.obj" "./api/lcd.obj" "./api/movement.obj" "./api/open_interface.obj" "./api/servo.obj" "./api/sonar.obj" "./api/sweep.obj" "./api/uart.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.1.2.111/driverlib/ccs/Debug/driverlib.lib" 
-<Linking>
-'Finished building target: Rover.out'
-' '
+gmake: Nothing to be done for 'all'.
 
 **** Build Finished ****

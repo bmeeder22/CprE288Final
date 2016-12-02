@@ -1,4 +1,9 @@
 eclipse.preferences.version=1
+environment/workspace/PATH/delimiter=;
+environment/workspace/PATH/operation=append
+environment/workspace/PATH/value=C\:/Energia/energia-0101E0017
+environment/workspace/append=true
+environment/workspace/appendContributed=true
 macros/workspace=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<macros/>\r\n
 org.eclipse.cdt.core.formatter.alignment_for_arguments_in_method_invocation=16
 org.eclipse.cdt.core.formatter.alignment_for_assignment=16
