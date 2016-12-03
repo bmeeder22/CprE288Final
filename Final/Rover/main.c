@@ -100,11 +100,11 @@ void calibrateIR() {
 
 void calibrateServo() {
 	while(1) {
-		lcd_printf("%d", move_servo_return(180));
+		move_servo(180);
 		timer_waitMillis(1000);
-		lcd_printf("%d", move_servo_return(90));
+		move_servo(90);
 		timer_waitMillis(500);
-		lcd_printf("%d", move_servo_return(0));
+		move_servo(0);
 		timer_waitMillis(1000);
 	}
 }

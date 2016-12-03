@@ -20,7 +20,7 @@ void sweep() {
             handleObjectFound(SonarDist);
         }
 
-        timer_waitMillis(100);
+        timer_waitMillis(50);
     }
 
     degrees = 180;
@@ -41,6 +41,8 @@ void handleObjectFound(int distance) {
 
     while(IRDist > 700) { // was while(IRDist > 800)
         degrees -= 1;
+        if(degrees < 0) break;
+
         move_servo(degrees);
         timer_waitMillis(100);
         IRDist = ir_read();

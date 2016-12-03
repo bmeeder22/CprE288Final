@@ -27,27 +27,21 @@ void servo_timer_init(){
 	timer_waitMillis(500);
 }
 
+//void move_servo(int degree){
+//	unsigned int out = degree*(160) + 6400;
+//
+//	TIMER1_TBMATCHR_R = (320000 - out) & 0xFFFF;
+//	TIMER1_TBPMR_R = (320000 - out) >> 16;
+//}
+
 void move_servo(int degree){
-	//800cyc/ms
-	//out=-4.44*degree+1600
-
-	unsigned int out = degree*(160) + 6400;
-//	unsigned int out = degree*(-4.44) + 1600;
-
-	TIMER1_TBMATCHR_R = (320000 - out) & 0xFFFF;
-	TIMER1_TBPMR_R = (320000 - out) >> 16;
+	unsigned pulse_period = 16000000*0.02;
+	unsigned pulse_width; //pulse width in cycles
+	//calculate pulse width in cycles
+	pulse_width = 16000000*(degree*0.00185/180 + 0.00045);//programmed for cybot 9
+	TIMER1_TBMATCHR_R = (pulse_period - pulse_width) & 0xFFFF;
+	TIMER1_TBPMR_R = (pulse_period - pulse_width) >> 16;
 }
 
-unsigned int move_servo_return(int degree){
-	//800cyc/ms
-	//out=-4.44*degree+1600
-
-	unsigned int out = degree*(160) + 6400;
-//	unsigned int out = degree*(-4.44) + 1600;
-
-	TIMER1_TBMATCHR_R = (320000 - out) & 0xFFFF;
-	TIMER1_TBPMR_R = (320000 - out) >> 16;
-	return out;
-}
 
 
