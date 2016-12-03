@@ -159,11 +159,11 @@ void move_forward(oi_t *sensor, int millimeters){
 void playSong() {
     uart_sendStr("WIN");
     oi_init(oi_alloc());
-    unsigned char numNotes = 5;
-    unsigned char notes[5] = {75,74,73,72,71};//{80,78,80,75,80,78,78,77,76,0,0,0,0,0,0,0};
-    unsigned char duration[5] = {15,15,15,15,15};//{12,12,30,35,10,10,15,20,10,10,10,30,30,30,30,30};
-    oi_loadSong(0,numNotes,notes,duration);
-    oi_play_song(0);
+    unsigned char numNotes = 12;
+	unsigned char notes[12] = {60,64,66,60,64,67,66,60,64,66,64,60};//{80,78,80,75,80,78,78,77,76,0,0,0,0,0,0,0};
+	unsigned char duration[12] = {20,20,30,20,20,10,40,20,20,30,20,50};//{12,12,30,35,10,10,15,20,10,10,10,30,30,30,30,30};
+	oi_loadSong(0,numNotes,notes,duration);
+	oi_play_song(0);
 }
 
 int move_forward_noChecks(oi_t *sensor, int distance) {
