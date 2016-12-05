@@ -26,10 +26,23 @@ public class ListClient {
         new Thread(serverListener).start();
     }
 
+    /**
+     *
+     * get objects
+     *
+     * @return objects
+     */
     public ArrayList<FoundObject> getObjects() {
         return objects;
     }
 
+    /**
+     *
+     * Send message s to robot
+     *
+     * @param s
+     * @return int related to success
+     */
     public int sendMessage(String s) {
         if(s.startsWith("f") || s.startsWith("b") || s.startsWith("l") || s.startsWith("r")) {
             error = false;
@@ -49,6 +62,11 @@ public class ListClient {
         return 0;
     }
 
+    /**
+     * Handle the received message of s
+     *
+     * @param s
+     */
     public void handleMessage(String s) {
         s = s.replace(new StringBuilder().append((char)0), "");
 
@@ -89,11 +107,19 @@ public class ListClient {
         }
     }
 
+    /**
+     * Send sweep data to the GUI
+     */
     private void sendSweepData() {
         robotViewPanel.repaint(objects);
         robotViewPanel.revalidate();
     }
-    
+
+    /**
+     * Handle when an object found message is received
+     *
+     * @param s
+     */
     private void handleObjectFound(String s) {
         String[] object = s.split(";");
         int width = Integer.parseInt(object[0].split(":")[1]);
@@ -103,6 +129,9 @@ public class ListClient {
     }
 }
 
+/**
+ * Class to listen to the robot for messsages
+ */
 class ServerListener implements Runnable {
     ListClient lc;
     BufferedReader in;
@@ -117,6 +146,9 @@ class ServerListener implements Runnable {
     }
 
     @Override
+    /**
+     * Main thread method
+     */
     public void run() {
         System.out.println("Client - waiting to read");
         while (true) {

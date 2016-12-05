@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import javax.swing.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Main GUI class
+ */
 public class Main {
     private JFrame mainFrame;
     private JLabel statusLabel;
@@ -26,6 +29,9 @@ public class Main {
         System.out.println("done!");
     }
 
+    /**
+     * Prepares the GUI. Renders the different sections and the main window
+     */
     private void prepareGUI(){
         mainFrame = new JFrame("Rover Mission Control");
         mainFrame.setSize(500,600);
@@ -54,6 +60,9 @@ public class Main {
         mainFrame.setVisible(true);
     }
 
+    /**
+     * Renders the four option buttons
+     */
     private void renderOptionPanel() {
         JButton button1 = new JButton("Sweep");
         JButton button2 = new JButton("2");
@@ -76,6 +85,9 @@ public class Main {
         optionPanel.add(button4);
     }
 
+    /**
+     * Renders the arrowpad
+     */
     private void renderArrowpad(){
         JButton forwardButton = new JButton("Forward");
         JButton backButton = new JButton("Backwards");
@@ -111,6 +123,10 @@ public class Main {
         mainFrame.setVisible(true);
     }
 
+
+    /**
+     * Listens for button clicks
+     */
     private class ButtonClickListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
@@ -140,6 +156,9 @@ public class Main {
             }
         }
 
+        /**
+         * Handles the right arrow press
+         */
         private void handleRight() {
             statusLabel.setText("Right");
             String message = "r" + numberField.getText();
@@ -148,6 +167,9 @@ public class Main {
             client.sendMessage(message);
         }
 
+        /**
+         * Handles the left arrow press
+         */
         private  void handleLeft() {
             statusLabel.setText("Left");
             String message = "l" + numberField.getText();
@@ -156,6 +178,9 @@ public class Main {
             client.sendMessage(message);
         }
 
+        /**
+         * Handles the forward arrow press
+         */
         private void handleForward() {
             statusLabel.setText("Forward");
             String message = "f" + numberField.getText();
@@ -164,6 +189,9 @@ public class Main {
             client.sendMessage(message);
         }
 
+        /**
+         * Handles the back arrow press
+         */
         private void handleBack() {
             statusLabel.setText("Backwards");
             String message = "b" + numberField.getText();
@@ -172,6 +200,9 @@ public class Main {
             client.sendMessage(message);
         }
 
+        /**
+         * Handles the sweep arrow press
+         */
         private void handleSweep() {
             client.sendMessage("swep");
         }

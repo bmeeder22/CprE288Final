@@ -3,6 +3,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+/**
+ * JPanel to show the objects on the screen
+ */
 public class RobotViewPanel extends JPanel {
 
     private ArrayList<FoundObject> objects;
@@ -14,6 +17,7 @@ public class RobotViewPanel extends JPanel {
         this.objects = objects;
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.g = g;
@@ -23,24 +27,39 @@ public class RobotViewPanel extends JPanel {
         renderObjects();
     }
 
+    /**
+     * Rerenders the Panel with an updated list of FoundObjects
+     *
+     * @param newObjects
+     */
     public void repaint(ArrayList<FoundObject> newObjects) {
         objects = newObjects;
         super.repaint();
         revalidate();
     }
 
+    /**
+     * Add String s to the Panel
+     * @param s
+     */
     public void addText(String s) {
         message = s;
         super.repaint();
         revalidate();
     }
 
+    /**
+     * Remove all currently printed text
+     */
     public void removeText() {
         message = null;
         super.repaint();
         revalidate();
     }
 
+    /**
+     * Render the message to the GUI
+     */
     private void renderMessage() {
         if(message != null) {
             g.drawString(message, 10, 10);
@@ -51,6 +70,9 @@ public class RobotViewPanel extends JPanel {
         }
     }
 
+    /**
+     * Render the rings to define the map lines
+     */
     private void renderRings() {
         g.setColor (Color.blue);
         g.drawOval (200, 150, 100, 100);
@@ -62,12 +84,20 @@ public class RobotViewPanel extends JPanel {
         g.drawOval (50, 0, 400, 400);
     }
 
+    /**
+     * Render the FoundObjects
+     */
     private void renderObjects() {
         for(FoundObject object: objects) {
             renderObject(object);
         }
     }
 
+    /**
+     * Render one object
+     *
+     * @param object
+     */
     private void renderObject(FoundObject object) {
         int[] coords = polarToRect(object.distance, object.location);
 
@@ -78,6 +108,13 @@ public class RobotViewPanel extends JPanel {
         g.drawOval(x, y, diameter, diameter);
     }
 
+    /**
+     * Converts polar coords into rectangular coords
+     *
+     * @param r
+     * @param theta
+     * @return
+     */
     private int[] polarToRect(double r, int theta) {
         int[] coords = new int[2];
         r = (r*5)/2.0 + 25;
@@ -94,6 +131,12 @@ public class RobotViewPanel extends JPanel {
         return coords;
     }
 
+    /**
+     * Convert angle in degrees to radians
+     *
+     * @param degrees
+     * @return
+     */
     private double degreesToRadians(int degrees) {
         return degrees*(Math.PI/180);
     }
