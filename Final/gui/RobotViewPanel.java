@@ -113,7 +113,7 @@ public class RobotViewPanel extends JPanel {
      *
      * @param r
      * @param theta
-     * @return
+     * @return int[] coordinates
      */
     private int[] polarToRect(double r, int theta) {
         int[] coords = new int[2];
